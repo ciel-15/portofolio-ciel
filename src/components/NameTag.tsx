@@ -141,8 +141,8 @@ export default function NameTag() {
         {/* Foto */}
         <div className="relative w-40 h-40 sm:w-52 sm:h-52 rounded-xl overflow-hidden neon-border">
           <Image
-            src="/Ciel.jpg"
-            alt="Foto Ciel"
+            src="/sayanih.jpeg"
+            alt="Foto Saya"
             fill
             sizes="(max-width: 640px) 160px, 208px"
             className="object-cover grayscale hover:grayscale-0 transition-all duration-500"
@@ -151,7 +151,7 @@ export default function NameTag() {
           />
         </div>
         <h2 className="neon-text mt-4 text-3xl sm:text-5xl font-extrabold tracking-tight leading-none">
-          CIEL
+          Norma
         </h2>
         <p className="mt-2 font-mono text-xs sm:text-sm text-white/60 tracking-widest">
           CREATIVE DEVELOPER

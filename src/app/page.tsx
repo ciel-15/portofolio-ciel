@@ -55,7 +55,7 @@ export default function Home() {
               <Reveal delay={100}>
                 <h1 className="text-4xl sm:text-6xl xl:text-7xl font-black leading-[1.05] tracking-tight">
                   Hi, I&apos;m{" "}
-                  <span className="neon-text neon-flicker">Ciel</span>.
+                  <span className="neon-text neon-flicker">Norma</span>.
                   <br />
                   <span className="text-white/50">I build</span>{" "}
                   <span className="inline-block border-b-2 border-white neon-text">
@@ -67,8 +67,7 @@ export default function Home() {
               </Reveal>
               <Reveal delay={200}>
                 <p className="mt-6 max-w-md text-white/60 leading-relaxed">
-                  Creative developer yang mengubah ide menjadi website interaktif,
-                  responsif, dan penuh gaya — di PC maupun mobile.
+                  Creative Developer talent for both PC and mobile platforms.
                 </p>
               </Reveal>
               <Reveal delay={300}>
