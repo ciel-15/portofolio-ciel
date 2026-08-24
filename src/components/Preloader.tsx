@@ -23,16 +23,32 @@ export default function Preloader({ onDone }: { onDone: () => void }) {
   const [gone, setGone] = useState(false);
 
   useEffect(() => {
+    if (sessionStorage.getItem("preloaded")) {
+      const r = requestAnimationFrame(() => {
+        setGone(true);
+        onDone();
+      });
+      return () => cancelAnimationFrame(r);
+    }
+    sessionStorage.setItem("preloaded", "1");
+    const id = setInterval(() => {
+      setProgress((p) => Math.min(100, p + Math.random() * 14 + 5));
+    }, 120);
+    return () => clearInterval(id);
+  }, [onDone]);
+
+  useEffect(() => {
     if (index >= WORDS.length) {
-      setExiting(true);
+      const t0 = setTimeout(() => setExiting(true), 0);
       const t1 = setTimeout(onDone, 700);
       const t2 = setTimeout(() => setGone(true), 800);
       return () => {
+        clearTimeout(t0);
         clearTimeout(t1);
         clearTimeout(t2);
       };
     }
-    const t = setTimeout(() => setIndex((i) => i + 1), index === WORDS.length - 1 ? 900 : 220);
+    const t = setTimeout(() => setIndex((i) => i + 1), index === WORDS.length - 1 ? 900 : 150);
     return () => clearTimeout(t);
   }, [index, onDone]);
 

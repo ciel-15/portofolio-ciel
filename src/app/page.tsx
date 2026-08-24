@@ -1,18 +1,18 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useState } from "react";
 import Preloader from "@/components/Preloader";
 import SideNav from "@/components/SideNav";
 import NameTag from "@/components/NameTag";
 import Reveal from "@/components/Reveal";
-import {
-  About,
-  Journey,
-  Experience,
-  Hobbies,
-  Projects,
-  Contact,
-} from "@/components/Sections";
+
+const About = dynamic(() => import("@/components/Sections").then((m) => m.About));
+const Journey = dynamic(() => import("@/components/Sections").then((m) => m.Journey));
+const Experience = dynamic(() => import("@/components/Sections").then((m) => m.Experience));
+const Hobbies = dynamic(() => import("@/components/Sections").then((m) => m.Hobbies));
+const Projects = dynamic(() => import("@/components/Sections").then((m) => m.Projects));
+const Contact = dynamic(() => import("@/components/Sections").then((m) => m.Contact));
 
 const MARQUEE_WORDS = [
   "CREATIVE DEVELOPER",

@@ -29,6 +29,26 @@ export default function NameTag() {
     s.y = -150;
 
     let raf = 0;
+    let running = true;
+
+    const start = () => {
+      if (!running) {
+        running = true;
+        raf = requestAnimationFrame(tick);
+      }
+    };
+    const stop = () => {
+      running = false;
+      cancelAnimationFrame(raf);
+    };
+
+    const io = new IntersectionObserver(
+      ([entry]) => (entry.isIntersecting ? start() : stop()),
+      { threshold: 0 }
+    );
+    io.observe(container);
+    const onVis = () => (document.hidden ? stop() : start());
+    document.addEventListener("visibilitychange", onVis);
 
     const tick = () => {
       const cw = container.clientWidth;
@@ -66,7 +86,7 @@ export default function NameTag() {
       }
 
       tag.style.transform = `translate(${s.x - tw / 2}px, ${s.y - th / 2}px) rotate(${s.rot}deg)`;
-      raf = requestAnimationFrame(tick);
+      if (running) raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
 
@@ -114,7 +134,9 @@ export default function NameTag() {
     window.addEventListener("pointerup", onUp);
 
     return () => {
-      cancelAnimationFrame(raf);
+      stop();
+      io.disconnect();
+      document.removeEventListener("visibilitychange", onVis);
       tag.removeEventListener("pointerdown", onDown);
       window.removeEventListener("pointermove", onMove);
       window.removeEventListener("pointerup", onUp);

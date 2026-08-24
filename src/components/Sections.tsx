@@ -226,8 +226,8 @@ export function About() {
         </Reveal>
         <Reveal delay={200}>
           <p className="text-white/70 leading-relaxed">
-            Hi! I'm <span className="neon-text font-semibold">Eka Dwi Normawati</span>. A
-            creative developer that's likes about design and tecnology.
+            Hi! I&apos;m <span className="neon-text font-semibold">Eka Dwi Normawati</span>. A
+            creative developer that&apos;s likes about design and tecnology.
             My specialty is developing designs or creating UI/UX interfaces.
           </p>
           <p className="mt-4 text-white/70 leading-relaxed">
@@ -358,7 +358,7 @@ export function Hobbies() {
           {active === "gaming" && (
             <Reveal>
               <p className="font-mono text-xs uppercase tracking-[0.3em] text-white/40 mb-5">
-                🎮 The game I'm playing — click for details
+                🎮 The game I&apos;m playing — click for details
               </p>
               <div className="grid sm:grid-cols-2 gap-5">
                 {GAMES.map((g) => (
@@ -572,7 +572,7 @@ export function Contact() {
         <Reveal delay={100}>
           <p className="text-white/70 leading-relaxed">
             Have an idea for a project or collaboration,
-            or just want to say hello? Send a message and let's create something together.
+            or just want to say hello? Send a message and let&apos;s create something together.
           </p>
           <div className="mt-8 space-y-4">
             {[
