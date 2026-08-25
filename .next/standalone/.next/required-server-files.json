@@ -106,7 +106,7 @@
         "transform": "lodash/{{member}}"
       }
     },
-    "outputFileTracingRoot": "C:\\Users\\nowii\\Documents\\projekpororo",
+    "outputFileTracingRoot": "C:\\Users\\reze\\Documents\\nori\\portofolio-ciel",
     "enablePrerenderSourceMaps": true,
     "cacheComponents": false,
     "cacheLife": {
@@ -176,7 +176,7 @@
       "proxyPrefetch": "flexible",
       "optimisticClientCache": true,
       "manualClientBasePath": false,
-      "cpus": 3,
+      "cpus": 7,
       "memoryBasedWorkersCount": false,
       "imgOptConcurrency": null,
       "imgOptOperationCache": null,
@@ -321,13 +321,13 @@
     "htmlLimitedBots": "[\\w-]+-Google|Google-[\\w-]+|Chrome-Lighthouse|Slurp|DuckDuckBot|baiduspider|yandex|sogou|bitlybot|tumblr|vkShare|quora link preview|redditbot|ia_archiver|Bingbot|BingPreview|applebot|facebookexternalhit|facebookcatalog|Twitterbot|LinkedInBot|Slackbot|Discordbot|WhatsApp|SkypeUriPreview|Yeti|googleweblight",
     "bundlePagesRouterDependencies": false,
     "configFileName": "next.config.ts",
-    "repoRoot": "C:\\Users\\nowii\\Documents\\projekpororo",
     "turbopack": {
-      "root": "C:\\Users\\nowii\\Documents\\projekpororo"
+      "root": "C:\\Users\\reze\\Documents\\nori\\portofolio-ciel"
     },
+    "repoRoot": "C:\\Users\\reze\\Documents\\nori\\portofolio-ciel",
     "distDirRoot": ".next"
   },
-  "appDir": "C:\\Users\\nowii\\Documents\\projekpororo",
+  "appDir": "C:\\Users\\reze\\Documents\\nori\\portofolio-ciel",
   "relativeAppDir": "",
   "files": [
     ".next\\package.json",
