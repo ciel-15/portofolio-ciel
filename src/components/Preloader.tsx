@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 
 const WORDS = [
   "Welcome",
@@ -16,33 +16,37 @@ const WORDS = [
   "Selamat Datang",
 ];
 
+const emptySubscribe = () => () => {};
+const getPreloaded = () => sessionStorage.getItem("preloaded") === "1";
+const getServerSnapshot = () => false;
+
 export default function Preloader({ onDone }: { onDone: () => void }) {
-  const [skipped] = useState(
-    () => typeof window !== "undefined" && sessionStorage.getItem("preloaded") === "1"
+  // sessionStorage must not be read during the hydrating render (it would
+  // mismatch the server HTML), so it goes through useSyncExternalStore.
+  const skipped = useSyncExternalStore(
+    emptySubscribe,
+    getPreloaded,
+    getServerSnapshot
   );
   const [index, setIndex] = useState(0);
   const [progress, setProgress] = useState(0);
   const [exiting, setExiting] = useState(false);
-  const [gone, setGone] = useState(skipped);
-
-  const finish = () => {
-    sessionStorage.setItem("preloaded", "1");
-    onDone();
-  };
+  const [done, setDone] = useState(false);
 
   useEffect(() => {
-    if (skipped) {
-      const r = requestAnimationFrame(() => onDone());
-      return () => cancelAnimationFrame(r);
-    }
+    if (!skipped) return;
+    onDone();
   }, [skipped, onDone]);
 
   useEffect(() => {
     if (skipped) return;
     if (index >= WORDS.length - 1) {
       const t0 = setTimeout(() => setExiting(true), 900);
-      const t1 = setTimeout(finish, 1600);
-      const t2 = setTimeout(() => setGone(true), 1700);
+      const t1 = setTimeout(() => {
+        sessionStorage.setItem("preloaded", "1");
+        onDone();
+      }, 1600);
+      const t2 = setTimeout(() => setDone(true), 1700);
       return () => {
         clearTimeout(t0);
         clearTimeout(t1);
@@ -51,7 +55,7 @@ export default function Preloader({ onDone }: { onDone: () => void }) {
     }
     const t = setTimeout(() => setIndex((i) => i + 1), 150);
     return () => clearTimeout(t);
-  }, [index, skipped]);
+  }, [index, skipped, onDone]);
 
   useEffect(() => {
     if (skipped) return;
@@ -59,9 +63,9 @@ export default function Preloader({ onDone }: { onDone: () => void }) {
       setProgress((p) => Math.min(100, p + Math.random() * 6 + 3));
     }, 120);
     return () => clearInterval(id);
-  }, []);
+  }, [skipped]);
 
-  if (gone) return null;
+  if (skipped || done) return null;
 
   return (
     <div

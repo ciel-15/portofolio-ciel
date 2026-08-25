@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Reveal, { SectionHeading } from "./Reveal";
 
@@ -323,6 +323,15 @@ export function Hobbies() {
   const [active, setActive] = useState<HobbyId | null>(null);
   const [activePhoto, setActivePhoto] = useState<(typeof PHOTOS)[number] | null>(null);
 
+  useEffect(() => {
+    if (!activePhoto) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setActivePhoto(null);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [activePhoto]);
+
   return (
     <section id="hobbies" className="relative py-24 sm:py-32 px-6 md:px-16 max-w-6xl mx-auto">
       <SectionHeading kicker="04 — Hobi" title="Hobbies" />
@@ -576,17 +585,19 @@ export function Contact() {
           </p>
           <div className="mt-8 space-y-4">
             {[
-              ["Email", "ciello036@gmail.com"],
-              ["Instagram", "@noriimayoo"],
-              ["GitHub", "https://github.com/ciel-15/"],
-            ].map(([k, v]) => (
+              ["Email", "ciello036@gmail.com", "mailto:ciello036@gmail.com"],
+              ["Instagram", "@noriimayoo", "https://instagram.com/noriimayoo"],
+              ["GitHub", "github.com/ciel-15", "https://github.com/ciel-15/"],
+            ].map(([k, v, href]) => (
               <div key={k} className="flex items-center gap-4">
                 <span className="w-24 shrink-0 font-mono text-xs uppercase tracking-[0.25em] text-white/35">
                   {k}
                 </span>
                 <span className="h-px flex-1 bg-white/10" />
                 <a
-                  href="#"
+                  href={href}
+                  target={href.startsWith("http") ? "_blank" : undefined}
+                  rel="noopener noreferrer"
                   className="text-sm text-white/75 hover:neon-text transition-all"
                 >
                   {v}
