@@ -23,7 +23,6 @@ const MARQUEE_WORDS = [
   "TAILWIND CSS",
   "NODE.JS",
   "FIGMA",
-  "NEON AESTHETIC",
 ];
 
 export default function Home() {

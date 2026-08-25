@@ -17,44 +17,46 @@ const WORDS = [
 ];
 
 export default function Preloader({ onDone }: { onDone: () => void }) {
+  const [skipped] = useState(
+    () => typeof window !== "undefined" && sessionStorage.getItem("preloaded") === "1"
+  );
   const [index, setIndex] = useState(0);
   const [progress, setProgress] = useState(0);
   const [exiting, setExiting] = useState(false);
-  const [gone, setGone] = useState(false);
+  const [gone, setGone] = useState(skipped);
+
+  const finish = () => {
+    sessionStorage.setItem("preloaded", "1");
+    onDone();
+  };
 
   useEffect(() => {
-    if (sessionStorage.getItem("preloaded")) {
-      const r = requestAnimationFrame(() => {
-        setGone(true);
-        onDone();
-      });
+    if (skipped) {
+      const r = requestAnimationFrame(() => onDone());
       return () => cancelAnimationFrame(r);
     }
-    sessionStorage.setItem("preloaded", "1");
-    const id = setInterval(() => {
-      setProgress((p) => Math.min(100, p + Math.random() * 14 + 5));
-    }, 120);
-    return () => clearInterval(id);
-  }, [onDone]);
+  }, [skipped, onDone]);
 
   useEffect(() => {
-    if (index >= WORDS.length) {
-      const t0 = setTimeout(() => setExiting(true), 0);
-      const t1 = setTimeout(onDone, 700);
-      const t2 = setTimeout(() => setGone(true), 800);
+    if (skipped) return;
+    if (index >= WORDS.length - 1) {
+      const t0 = setTimeout(() => setExiting(true), 900);
+      const t1 = setTimeout(finish, 1600);
+      const t2 = setTimeout(() => setGone(true), 1700);
       return () => {
         clearTimeout(t0);
         clearTimeout(t1);
         clearTimeout(t2);
       };
     }
-    const t = setTimeout(() => setIndex((i) => i + 1), index === WORDS.length - 1 ? 900 : 150);
+    const t = setTimeout(() => setIndex((i) => i + 1), 150);
     return () => clearTimeout(t);
-  }, [index, onDone]);
+  }, [index, skipped]);
 
   useEffect(() => {
+    if (skipped) return;
     const id = setInterval(() => {
-      setProgress((p) => Math.min(100, p + Math.random() * 14 + 5));
+      setProgress((p) => Math.min(100, p + Math.random() * 6 + 3));
     }, 120);
     return () => clearInterval(id);
   }, []);
